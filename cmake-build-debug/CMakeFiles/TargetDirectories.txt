@@ -1,0 +1,3 @@
+C:/Users/modys/OneDrive/Desktop/A1-Ramly/cmake-build-debug/CMakeFiles/A1_Ramly.dir
+C:/Users/modys/OneDrive/Desktop/A1-Ramly/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/modys/OneDrive/Desktop/A1-Ramly/cmake-build-debug/CMakeFiles/rebuild_cache.dir
