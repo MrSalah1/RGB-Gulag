@@ -17,6 +17,9 @@ void Invert_color(Image &img) {
         }
     }
 }
+void Black_and_White(Image &img){
+    cout<<"Hello";
+}
 int main() {
     Image current_image;
     string filename;
