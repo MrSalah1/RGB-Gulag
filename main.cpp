@@ -17,8 +17,19 @@ void Invert_color(Image &img) {
         }
     }
 }
-void Black_and_White(Image &img){
-    cout<<"Hello";
+void Convert_To_Black_And_White(Image &img) {
+    for (int i = 0; i < img.height; i++) {
+        for (int j = 0; j < img.width; j++) {
+            unsigned char r = img(j, i, 0);
+            unsigned char g = img(j, i, 1);
+            unsigned char b = img(j, i, 2);
+            unsigned char gray = (r + g + b) / 3;
+            unsigned char Black_And_White = (gray > 128) ? 255 : 0;
+            for (int k = 0; k < img.channels; k++) {
+                img(j, i, k) = Black_And_White;
+            }
+        }
+    }
 }
 int main() {
     Image current_image;
@@ -30,6 +41,7 @@ int main() {
     do {
         cout<<"\n--- Main Menu ---\n";
         cout<<" To load a new image enter 1\n";
+        cout<<" To convert to a Black and White filter enter 2\n";
         cout<<" To apply Invert Filter enter 3\n";
         cout<<" To save the image enter s\n";
         cout<<" To exit the program enter x\n";
@@ -46,6 +58,10 @@ int main() {
                 cout << "Error: Failed to load the new image. Keeping the current image.\n";
             }
             break;
+            case '2':
+                Convert_To_Black_And_White(current_image);
+                cout<<"Image converted successfully.\n";
+                break;
             case '3':
                 Invert_color(current_image);
             cout<<"Invert colors filter applied succesfully\n";
