@@ -3,6 +3,34 @@
 #include <iostream>
 using namespace std;
 #include "Image_Class.h"
+void Flip_img(Image &img, char flip) {
+    Image new_img1(img.width, img.height, img.channels);
+
+    for (int y = 0; y < img.height;y++) {
+        for (int x = 0; x < img.width; x++) {
+            int nx = x;
+            int ny= y;
+
+            if (flip== 'h') {
+                nx = img.width - 1 - x;
+            }
+      else if (flip== 'v') {
+                ny = img.height - 1 - y;
+            }
+                else if (flip == 'b') {
+                nx = img.width - 1 - x;
+                ny = img.height - 1 - y;
+            }
+
+         for (int z = 0; z < img.channels; z++) {
+                new_img1(nx, ny, z) = img(x, y, z);
+            }
+        }
+    }
+
+    img = new_img1;
+}
+
 
 int main() {
     string filename;

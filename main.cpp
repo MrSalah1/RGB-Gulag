@@ -57,8 +57,51 @@ void Rotate_img(Image &img,char n) {
 
         img = new_img;
     }
-
 }
+void Add_Frame(Image &img,char f,char color_choice) {
+    const int thickness=20;
+    unsigned char r,g,b;
+    if (color_choice=='r'){r=255,g=0,b=0;}
+    if (color_choice=='b'){r=0,g=0,b=255;}
+    if (color_choice=='w') {
+        r=255,g=255,b=255;
+    }
+    Image new_img(img.width+40 ,img.height+40);
+    for (int y=0;y<new_img.height;y++) {
+        for (int x=0;x<new_img.width;x++){
+            if (x < thickness || x >= new_img.width - thickness ||
+                             y < thickness || y >= new_img.height - thickness) {
+                if (f=='1') {
+                    new_img(x,y,0)=r;
+                     new_img(x,y,1)=g;
+                     new_img(x,y,2)=b;
+                }
+                else {
+                    int pattern=(x/10 +y/10)%2;
+                    if (pattern) {
+                        new_img(x,y,0)=r;
+                        new_img(x,y,1)=g;
+                        new_img(x,y,2)=b;
+                    } else {
+                        new_img(x,y,0)=0;
+                        new_img(x,y,1)=0;
+                        new_img(x,y,2)=0;
+                    }
+                }
+            }
+        }
+    }
+    for (int y = 0; y < img.height; y++) {
+        for (int x = 0; x < img.width; x++) {
+            for (int z = 0; z < img.channels; z++) {
+                new_img(x + 20,y+20, z) = img(x, y, z);
+            }
+        }
+    }
+
+    img = new_img;
+}
+
 int main() {
     Image current_image;
     string filename;
@@ -70,7 +113,8 @@ int main() {
         cout<<"\n--- Main Menu ---\n";
         cout<<" To load a new image enter 1\n";
         cout<<" To apply Invert Filter enter 3\n";
-        cout<<" To apply rotation filter press 6\n";
+        cout<<" To apply rotation filter enter 6\n";
+        cout<<" To add a frame enter 9\n ";
         cout<<" To save the image enter s\n";
         cout<<" To exit the program enter x\n";
         cout<<" Please enter your choice : ";
@@ -95,7 +139,15 @@ int main() {
                 char n;
                 cin>>n;
             Rotate_img(current_image,n);
-
+            case '9':
+                cout<<"For simple frame enter 1 \n";
+                cout<<"For ornamented frame enter 2\n";
+                char f;
+                cin>>f;
+                cout<<"choose frame color :RED(r),blue(b),white(w)\n";
+                char cc;
+                cin>>cc;
+                Add_Frame(current_image,f,cc);
 
             case 's':
                 cout<<"Enter the name of the img u want to save:\n";
