@@ -31,6 +31,28 @@ void Convert_To_Black_And_White(Image &img) {
         }
     }
 }
+void Flip_Horizontal(Image &img) {
+    for (int i = 0; i < img.height; i++) {
+        for (int j = 0; j < img.width / 2; j++) {
+            for (int k = 0; k < img.channels; k++) {
+                unsigned char temp = img(j, i, k);
+                img(j, i, k) = img(img.width - 1 - j, i, k);
+                img(img.width - 1 - j, i, k) = temp;
+            }
+        }
+    }
+}
+void Flip_Vertical(Image &img) {
+    for (int i = 0; i < img.height / 2; i++) {
+        for (int j = 0; j < img.width; j++) {
+            for (int k = 0; k < img.channels; k++) {
+                unsigned char temp = img(j, i, k);
+                img(j, i, k) = img(j, img.height - 1 - i, k);
+                img(j, img.height - 1 - i, k) = temp;
+            }
+        }
+    }
+}
 int main() {
     Image current_image;
     string filename;
@@ -43,6 +65,7 @@ int main() {
         cout<<" To load a new image enter 1\n";
         cout<<" To convert to a Black and White filter enter 2\n";
         cout<<" To apply Invert Filter enter 3\n";
+        cout<<" To apply Flip Filter enter 4\n";
         cout<<" To save the image enter s\n";
         cout<<" To exit the program enter x\n";
         cout<<" Please enter your choice : ";
@@ -57,7 +80,7 @@ int main() {
             else {
                 cout << "Error: Failed to load the new image. Keeping the current image.\n";
             }
-            break;
+                break;
             case '2':
                 Convert_To_Black_And_White(current_image);
                 cout<<"Image converted successfully.\n";
@@ -65,7 +88,17 @@ int main() {
             case '3':
                 Invert_color(current_image);
             cout<<"Invert colors filter applied succesfully\n";
-            break;
+                break;
+            case '4':
+                cout<<"Horizontal or Vertical?\n";
+                cin>>choice;
+                if(choice == 'H') {
+                    Flip_Horizontal(current_image);
+                }else {
+                    Flip_Vertical(current_image);
+                }
+                cout<<"Image flipped successfully";
+                break;
             case 's':
                 cout<<"Enter the name of the img u want to save:\n";
             cin>>filename;
@@ -74,13 +107,13 @@ int main() {
             } else {
                 cout << "Error: Failed to save the image.\n";
             }
-            break;
+                break;
             case 'x':
                 cout<< "Exiting program.\n";
-            break;
+                break;
             default:
                 cout << "Invalid choice. Please try again.\n";
-            break;
+                break;
         }
     }
         while (choice !='x');
