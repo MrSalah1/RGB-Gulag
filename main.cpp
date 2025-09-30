@@ -2,35 +2,32 @@
 #include <string>
 #include "Image_Class.h"
 using namespace std;
+
 void Greet() {
-    cout<<"Welcome to RBG Gulag\n";
-    cout<<"Please enter the file name :)\n";
+    cout << "Welcome to RBG Gulag\n";
+    cout << "Please enter the file name :)\n";
 }
+
 void Invert_color(Image &img) {
-    for (int i=0;i<img.height;i++) {
-        for (int j=0;j<img.width;j++) {
-            for (int k=0;k<img.channels;k++) {
-                unsigned char og_val=img(j,i,k);
-                unsigned char inverted_val=255-og_val;
-                img(j,i,k)=inverted_val;
+    for (int i = 0; i < img.height; i++) {
+        for (int j = 0; j < img.width; j++) {
+            for (int k = 0; k < img.channels; k++) {
+                unsigned char og_val = img(j, i, k);
+                unsigned char inverted_val = 255 - og_val;
+                img(j, i, k) = inverted_val;
             }
         }
     }
 }
 
-
 void grayscale(Image& image) {
     for (int i = 0; i < image.width; ++i) {
         for (int j = 0; j < image.height; ++j) {
-            unsigned  int avg = 0; // Initialize average value
-
+            unsigned int avg = 0;
             for (int k = 0; k < 3; ++k) {
-                avg += image(i, j, k); // Accumulate pixel values
+                avg += image(i, j, k);
             }
-
-            avg /= 3; // Calculate average
-
-            // Set all channels to the average value
+            avg /= 3;
             image(i, j, 0) = avg;
             image(i, j, 1) = avg;
             image(i, j, 2) = avg;
@@ -38,68 +35,110 @@ void grayscale(Image& image) {
     }
 }
 
+Image resizeImage(const Image& input, int newWidth, int newHeight) {
+    Image output(newWidth, newHeight);
+    float x_ratio = input.width / static_cast<float>(newWidth);
+    float y_ratio = input.height / static_cast<float>(newHeight);
+    for (int i = 0; i < newWidth; ++i) {
+        for (int j = 0; j < newHeight; ++j) {
+            int nearestX = static_cast<int>(i * x_ratio);
+            int nearestY = static_cast<int>(j * y_ratio);
+            for (int c = 0; c < 3; ++c) {
+                output(i, j, c) = input(nearestX, nearestY, c);
+            }
+        }
+    }
+    return output;
+}
+
+void averageTwoImages(Image& image) {
+    string filename2;
+    cout << "Pls enter the second colored image name to average with the current image: ";
+    cin >> filename2;
+    Image image2(filename2);
+    if (image.width != image2.width || image.height != image2.height) {
+        cout << "Images have different sizes. Resizing second image to match the first..." << endl;
+        image2 = resizeImage(image2, image.width, image.height);
+    }
+    for (int i = 0; i < image.width; ++i) {
+        for (int j = 0; j < image.height; ++j) {
+            unsigned int avgR = 0, avgG = 0, avgB = 0;
+            avgR = (image(i, j, 0) + image2(i, j, 0)) / 2;
+            avgG = (image(i, j, 1) + image2(i, j, 1)) / 2;
+            avgB = (image(i, j, 2) + image2(i, j, 2)) / 2;
+            image(i, j, 0) = avgR;
+            image(i, j, 1) = avgG;
+            image(i, j, 2) = avgB;
+        }
+    }
+    cout << "Averaging complete. Use option 's' to save the result if desired.\n";
+}
 
 int main() {
     Image current_image;
     string filename;
     char choice;
+
     Greet();
-    cin>>filename;
+    cin >> filename;
     current_image.loadNewImage(filename);
+
     do {
-        cout<<"\n--- Main Menu ---\n";
-        cout<<" To load a new image enter 1\n";
-        cout<<" To apply Invert Filter enter 3\n";
-        cout<<" To save the image enter s\n";
-        cout<<" To exit the program enter x\n";
-        cout<<" To display the image in grayscale enter f\n";
-        cout<<" Please enter your choice : ";
-        cin>>choice;
+        cout << "\n--- Main Menu ---\n";
+        cout << " To load a new image enter 1\n";
+        cout << " To apply Invert Filter enter 3\n";
+        cout << " To save the image enter s\n";
+        cout << " To exit the program enter x\n";
+        cout << " To display the image in grayscale enter f\n";
+        cout << " To average two colored images enter a\n";
+        cout << " Please enter your choice : ";
+        cin >> choice;
+
         switch (choice) {
             case '1':
-                cout<<"Enter the name of the new image file to load: ";
-            cin>>filename;
-            if (current_image.loadNewImage(filename)) {
-                cout<<"New image loaded successfully.\n";
-            }
-            else {
-                cout << "Error: Failed to load the new image. Keeping the current image.\n";
-            }
-            break;
+                cout << "Enter the name of the new image file to load: ";
+                cin >> filename;
+                if (current_image.loadNewImage(filename)) {
+                    cout << "New image loaded successfully.\n";
+                } else {
+                    cout << "Error: Failed to load the new image. Keeping the current image.\n";
+                }
+                break;
+
             case '3':
                 Invert_color(current_image);
-            cout<<"Invert colors filter applied succesfully\n";
-            break;
+                cout << "Invert colors filter applied successfully\n";
+                break;
+
             case 's':
-                cout<<"Enter the name of the img u want to save:\n";
-            cin>>filename;
-            if (current_image.saveImage(filename)) {
-                cout << "Image saved successfully.\n";
-            } else {
-                cout << "Error: Failed to save the image.\n";
-            }
-            break;
+                cout << "Enter the name of the image you want to save:\n";
+                cin >> filename;
+                if (current_image.saveImage(filename)) {
+                    cout << "Image saved successfully.\n";
+                } else {
+                    cout << "Error: Failed to save the image.\n";
+                }
+                break;
+
             case 'x':
-                cout<< "Exiting program.\n";
-            break;
+                cout << "Exiting program.\n";
+                break;
+
+            case 'f': {
+                grayscale(current_image);
+                cout << "Image converted to grayscale. Use 's' to save it.\n";
+                break;
+            }
+
+            case 'a':
+                averageTwoImages(current_image);
+                break;
+
             default:
                 cout << "Invalid choice. Please try again.\n";
-            break;
-            case 'f':
-            Image image(filename);
-
-
-            grayscale(image);
-
-            cout << "Pls enter image name to store new image\n";
-            cout << "and specify extension .jpg, .bmp, .png, .tga: ";
-
-            cin >> filename;
-            image.saveImage(filename);
-            cout<<"Image is in gray scale.\n";
-            break;
+                break;
         }
-    }
-        while (choice !='x');
+    } while (choice != 'x');
+
     return 0;
 }
