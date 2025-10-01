@@ -11,7 +11,7 @@ include_directories(.)
 # Since the image library is header-only, you don't need to link it as a separate library.
 add_executable(A1_Ramly
         main.cpp
-        cmake-build-debug/samurai.jpg
+        samurai.jpg
         #[[ImageProcessingDemo.cpp]]
         Sample-imgs
 

@@ -138,7 +138,8 @@ int main() {
                 cout<<"Degree of rotation? 90 enter 'a',180 'b',270 'c'.";
                 char n;
                 cin>>n;
-            Rotate_img(current_image,n);
+                Rotate_img(current_image,n);
+                break;
             case '9':
                 cout<<"For simple frame enter 1 \n";
                 cout<<"For ornamented frame enter 2\n";
@@ -148,16 +149,25 @@ int main() {
                 char cc;
                 cin>>cc;
                 Add_Frame(current_image,f,cc);
-
-            case 's':
-                cout<<"Enter the name of the img u want to save:\n";
-            cin>>filename;
-            if (current_image.saveImage(filename)) {
-                cout << "Image saved successfully.\n";
-            } else {
-                cout << "Error: Failed to save the image.\n";
-            }
             break;
+
+            case 's': {
+                cout<<"Enter the name,extension of the img u want to save:\n";
+                cin>>filename;
+                int s1=filename.size();
+                string extension= filename.substr(s1-3);
+
+                if (extension=="jpg" ||extension=="bmp"||extension=="png" ) {
+                    if (current_image.saveImage(filename)) {
+                        cout << "Image saved successfully.\n";
+                    } else {
+                        cout << "Error: Failed to save the image.\n";
+                    }
+                } else {
+                    cout<<"Please enter a supported extension!\n";
+                }
+                break;
+            }
             case 'x':
                 cout<< "Exiting program.\n";
             break;
