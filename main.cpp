@@ -95,6 +95,45 @@ void applySunlightFilter(Image &image, double redFactor = 1.1, double greenFacto
     }
 }
 
+
+void adjust_brightness(Image& image, float percentage, bool lighten) {
+    float factor;
+    if (lighten) {
+        factor = 1.0f + (percentage / 100.0f);
+    } else {
+        factor = 1.0f - (percentage / 100.0f);
+    }
+
+    for (int i = 0; i < image.width; ++i) {
+        for (int j = 0; j < image.height; ++j) {
+            for (int k = 0; k < 3; ++k) {
+                int value = static_cast<int>(image(i, j, k) * factor);
+                if (value > 255) value = 255;
+                if (value < 0) value = 0;
+                image(i, j, k) = static_cast<unsigned char>(value);
+            }
+        }
+    }
+}
+
+void process_image(Image& image) {
+    char choice;
+    cout << "Do you want to (l)ighten or (d)arken the image? ";
+    cin >> choice;
+
+    float percentage;
+    cout << "Enter percentage (0 to 100): ";
+    cin >> percentage;
+
+    if (percentage < 0) percentage = 0;
+    if (percentage > 100) percentage = 100;
+
+    bool lighten = (choice == 'l' || choice == 'L');
+    adjust_brightness(image, percentage, lighten);
+
+}
+
+
 int main() {
     Image current_image;
     string filename;
@@ -112,7 +151,8 @@ int main() {
         cout << " To exit the program enter x\n";
         cout << " To display the image in grayscale enter f\n";
         cout << " To average two colored images enter a\n";
-        cout << " To add sunlight to an image enter g\n";
+        cout << " To add sunlight to the image enter g\n";
+        cout << " To change the brightness of the image enter o\n";
         cout << " Please enter your choice : ";
         cin >> choice;
 
@@ -160,6 +200,9 @@ int main() {
             case 'g':
                 applySunlightFilter(current_image);
                 cout << "Done.\n";
+                break;
+            case 'o':
+                process_image(current_image);
                 break;
             default:
                 cout << "Invalid choice. Please try again.\n";
