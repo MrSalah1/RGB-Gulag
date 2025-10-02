@@ -74,6 +74,27 @@ void averageTwoImages(Image& image) {
     cout << "Averaging complete. Use option 's' to save the result if desired.\n";
 }
 
+
+
+void applySunlightFilter(Image &image, double redFactor = 1.1, double greenFactor = 1.04, double blueFactor = 0.7) {
+    for (int i = 0; i < image.width; i++) {
+        for (int j = 0; j < image.height; j++) {
+            int r = image(i, j, 0);
+            int g = image(i, j, 1);
+            int b = image(i, j, 2);
+
+            // Apply adjustments with clamping
+            r = min(255, max(0, int(r * redFactor)));
+            g = min(255, max(0, int(g * greenFactor)));
+            b = min(255, max(0, int(b * blueFactor)));
+
+            image(i, j, 0) = r;
+            image(i, j, 1) = g;
+            image(i, j, 2) = b;
+        }
+    }
+}
+
 int main() {
     Image current_image;
     string filename;
@@ -91,6 +112,7 @@ int main() {
         cout << " To exit the program enter x\n";
         cout << " To display the image in grayscale enter f\n";
         cout << " To average two colored images enter a\n";
+        cout << " To add sunlight to an image enter g\n";
         cout << " Please enter your choice : ";
         cin >> choice;
 
@@ -124,16 +146,21 @@ int main() {
                 cout << "Exiting program.\n";
                 break;
 
-            case 'f': {
+            case 'f':
                 grayscale(current_image);
-                cout << "Image converted to grayscale. Use 's' to save it.\n";
+                cout << "Done.\n";
                 break;
-            }
+
 
             case 'a':
                 averageTwoImages(current_image);
+                cout << "Done.\n";
                 break;
 
+            case 'g':
+                applySunlightFilter(current_image);
+                cout << "Done.\n";
+                break;
             default:
                 cout << "Invalid choice. Please try again.\n";
                 break;
@@ -142,3 +169,5 @@ int main() {
 
     return 0;
 }
+
+
