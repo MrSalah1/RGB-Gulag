@@ -53,6 +53,44 @@ void Flip_Vertical(Image &img) {
         }
     }
 }
+void Crop_Image(Image &img) {
+    int X;
+    int Y;
+    int cropWidth;
+    int cropHeight;
+    cin>>X;
+    cin>>Y;
+    cin>>cropWidth;
+    cin>>cropHeight;
+    Image cropped(cropWidth, cropHeight);
+    for(int i=0;i<cropHeight;i++){
+        for(int j=0;j<cropWidth;j++){
+            for(int k=0;k<img.channels;k++){
+                cropped(j,i,k)=img(j+X, i+Y, k);
+            }
+        }
+    }
+    img=cropped;
+}
+void Resize_Image(Image &img) {
+    int newWidth;
+    int newHeight;
+    cin>>newWidth;
+    cin>>newHeight;
+    Image resized(newWidth, newHeight);
+    double x_ratio=static_cast<double>(img.width) / newWidth;
+    double y_ratio=static_cast<double>(img.height) / newHeight;
+    for(int i=0; i<newHeight; i++) {
+        for(int j=0; j<newWidth; j++) {
+            int NewX = static_cast<int>(j * x_ratio);
+            int NewY = static_cast<int>(i * y_ratio);
+            for(int k=0; k<img.channels; k++) {
+                resized(j, i, k) = img(NewX, NewY, k);
+            }
+        }
+    }
+    img = resized;
+}
 int main() {
     Image current_image;
     string filename;
@@ -66,6 +104,8 @@ int main() {
         cout<<" To convert to a Black and White filter enter 2\n";
         cout<<" To apply Invert Filter enter 3\n";
         cout<<" To apply Flip Filter enter 4\n";
+        cout<<" To crop image enter 8\n";
+        cout<<" To resize image enter r\n";
         cout<<" To save the image enter s\n";
         cout<<" To exit the program enter x\n";
         cout<<" Please enter your choice : ";
@@ -98,6 +138,14 @@ int main() {
                     Flip_Vertical(current_image);
                 }
                 cout<<"Image flipped successfully";
+                break;
+            case '8':
+                cout<<"Please enter the corners and the dimensions of the image:\n";
+                Crop_Image(current_image);
+                break;
+            case 'r':
+                cout<<"Please enter the new dimensions\n";
+                Resize_Image(current_image);
                 break;
             case 's':
                 cout<<"Enter the name of the img u want to save:\n";
