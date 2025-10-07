@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include "Image_Class.h"
+#include "vector"
 using namespace std;
 
 void Greet() {
@@ -134,6 +135,36 @@ void process_image(Image& image) {
 }
 
 
+void edge_detection(Image& image) {
+    vector<vector<unsigned int>> Z(image.width , vector<unsigned int>(image.height));
+    for (int i = 0; i < image.width; ++i) {
+        for (int j = 0; j < image.height; ++j) {
+            unsigned int avg = 0;
+            for (int k = 0; k < 3; ++k) {
+                avg += image(i, j, k);
+            }
+            avg /= 3;
+            Z[i][j] = avg;
+        }
+    }
+    for (int i = 0; i < image.width-1; ++i) {
+        for (int j = 0; j < image.height-1; ++j) {
+            unsigned int edge_value = abs((int)Z[i+1][j] - (int)Z[i][j]) + abs((int)Z[i][j+1] - (int)Z[i][j]);
+            unsigned int color = 0;
+            if (edge_value > 50) {
+                color = 0;
+            }
+            else{
+                color = 255;
+            }
+            for (int k = 0; k < 3; ++k) {
+                image(i, j, k) = color;
+            }
+        }
+    }
+}
+
+
 int main() {
     Image current_image;
     string filename;
@@ -153,6 +184,7 @@ int main() {
         cout << " To average two colored images enter a\n";
         cout << " To add sunlight to the image enter g\n";
         cout << " To change the brightness of the image enter o\n";
+        cout << " To apply edge detection enter p\n";
         cout << " Please enter your choice : ";
         cin >> choice;
 
@@ -203,6 +235,11 @@ int main() {
                 break;
             case 'o':
                 process_image(current_image);
+                cout << "Done.\n";
+                break;
+            case 'p':
+                edge_detection(current_image);
+                cout << "Done.\n";
                 break;
             default:
                 cout << "Invalid choice. Please try again.\n";
