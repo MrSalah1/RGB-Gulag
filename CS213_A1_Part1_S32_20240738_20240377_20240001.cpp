@@ -22,15 +22,17 @@ Team Details:
 Abanob Ehab (20240001)
 Omar Abdelsamad (20240377)
 Ahmed Salah (20240738)
-Section: S34
+Section: S32
 
 Work Breakdown:
 Abanob (20240001) - Filters 1, 9, 10, 11, 13
 Omar (20240377)   - Filters 2, 4, 7, 8
 Ahmed (20240738)  - Filters 3, 5, 6, 12, 14
 
-Video Demo: <insert link here>
-Shared Document: <https://1drv.ms/w/c/af63ed7cb1700daf/EaZsFIdz5w9FrylBvswYiWgBTGoUxc96pu0IHlUmUpnKiA?e=xd9vFi>
+Video Demo: <https://youtu.be/EN-dfKWHtdU>
+Shared Document: <https://1drv.ms/w/c/af63ed7cb1700daf/EU2FHIMFTUlHvSXDyH4fWZ0BSLWOpkQhTt9yisEAKKZlGQ?e=bFe0Gj>
+Google Drive link : <https://drive.google.com/drive/folders/1W7Ndu0bbzhydXtwNZHSCngnIkQrnieBm?usp=drive_link>
+github repository link: <https://github.com/MrSalah1/RGB-Gulag.git>
 */
 
 #include <iostream>
