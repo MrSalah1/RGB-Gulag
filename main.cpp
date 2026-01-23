@@ -1,10 +1,74 @@
+/*
 #include <iostream>
 #include <string>
+#include<vector>
+#include <algorithm>
 #include "Image_Class.h"
 using namespace std;
 void Greet() {
     cout<<"Welcome to RBG Gulag\n";
     cout<<"Please enter the file name :)\n";
+}
+void Oil_filter(Image &img) {
+    Image new_img(img.width,img.height);
+    const int radius=5;
+    const int intensity_level =20;
+    for (int y=0;y<img.height;y++) {
+        for (int x=0;x<img.width;x++) {
+            vector<int>count(20,0);
+            vector<int>sum_r(20,0);
+            vector<int>sum_g(20,0);
+            vector<int>sum_b(20,0);
+            for (int dy=-5;dy<=5;dy++) {
+                for (int dx=-5;dx<=5;++dx) {
+                    int new_y= y+dy;
+                    int new_x= x+dx;
+                    if (new_x>=0&& new_x < img.width && new_y >= 0 && new_y < img.height) {
+                        unsigned char r = img(new_x, new_y, 0);
+                        unsigned char g = img(new_x, new_y, 1);
+                        unsigned char b = img(new_x, new_y, 2);
+                        int intensity = ((r + g + b) / 3 * intensity_level) / 255;
+                        if (intensity>=intensity_level){intensity =intensity_level - 1;}
+
+                        count[intensity]++;
+                        sum_r[intensity] += r;
+                        sum_g[intensity] += g;
+                        sum_b[intensity] += b;
+                    }
+                }
+            }
+            int max_i=max_element(count.begin(),count.end())-count.begin();
+            int c=max(1,count[max_i]);
+            new_img(x, y, 0) = sum_r[max_i] / c;
+            new_img(x, y, 1) = sum_g[max_i] / c;
+            new_img(x, y, 2) = sum_b[max_i] / c;
+        }
+    }
+    img=new_img;
+}
+void box_blur(Image &img , int m) {
+    Image new_img(img.width,img.height);
+    for (int y=0;y<img.height;y++) {
+        for (int x=0;x<img.width;x++) {
+            for (int c=0;c<img.channels;c++) {
+                int sum=0;
+                int count=0;
+                int e = m*10;
+                for (int i=-e;i<=e;i++) {
+                    for (int j=-e;j<=e;j++) {
+                        int nx=x+j;
+                        int ny=y+i;
+                        if (nx>=0 && nx<img.width && ny>=0 &&ny<img.height) {
+                            sum+=img(nx,ny,c);
+                            count++;
+                        }
+                    }
+                }
+                new_img(x,y,c)=sum/count;
+            }
+        }
+    }
+    img=new_img;
 }
 void Invert_color(Image &img) {
     for (int i=0;i<img.height;i++) {
@@ -115,6 +179,8 @@ int main() {
         cout<<" To apply Invert Filter enter 3\n";
         cout<<" To apply rotation filter enter 6\n";
         cout<<" To add a frame enter 9\n ";
+        cout<<"To blur image enter b\n";
+        cout<<" To apply oil paint filter enter o\n";
         cout<<" To save the image enter s\n";
         cout<<" To exit the program enter x\n";
         cout<<" Please enter your choice : ";
@@ -150,7 +216,17 @@ int main() {
                 cin>>cc;
                 Add_Frame(current_image,f,cc);
             break;
-
+            case 'b':
+                int m;
+                cout<<"Enter blur level from 1-9:\n";
+                cin>>m;
+                box_blur(current_image,m);
+            cout<<"Image blurred succesfully\n";
+            break;
+            case 'o':
+                Oil_filter(current_image);
+            cout<<"Oil filter applied succesfully\n";
+            break;
             case 's': {
                 cout<<"Enter the name,extension of the img u want to save:\n";
                 cin>>filename;
@@ -178,4 +254,17 @@ int main() {
     }
         while (choice !='x');
     return 0;
+}
+*/
+#include "mainwindow.h"
+#include <QApplication>
+
+int main(int argc, char *argv[])
+{
+    QApplication a(argc, argv);
+    MainWindow w;
+    w.setWindowTitle("RGB Gulag - Image Processor");
+    w.resize(1200, 800);
+    w.show();
+    return a.exec();
 }

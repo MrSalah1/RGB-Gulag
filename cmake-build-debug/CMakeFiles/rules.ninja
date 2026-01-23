@@ -6,7 +6,7 @@
 # It is included in the main 'build.ninja'.
 
 # =============================================================================
-# Project: A1_Ramly
+# Project: RGB_Gulag_GUI
 # Configurations: Debug
 # =============================================================================
 # =============================================================================
@@ -14,7 +14,7 @@
 #############################################
 # Rule for compiling CXX files.
 
-rule CXX_COMPILER__A1_Ramly_unscanned_Debug
+rule CXX_COMPILER__RGB_Gulag_GUI_unscanned_Debug
   depfile = $DEP_FILE
   deps = gcc
   command = ${LAUNCHER}${CODE_CHECK}C:\Clion\CLION2~1.3\bin\mingw\bin\G__~1.EXE $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
@@ -24,7 +24,7 @@ rule CXX_COMPILER__A1_Ramly_unscanned_Debug
 #############################################
 # Rule for linking CXX executable.
 
-rule CXX_EXECUTABLE_LINKER__A1_Ramly_Debug
+rule CXX_EXECUTABLE_LINKER__RGB_Gulag_GUI_Debug
   command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && C:\Clion\CLION2~1.3\bin\mingw\bin\G__~1.EXE $FLAGS $LINK_FLAGS $in -o $TARGET_FILE -Wl,--out-implib,$TARGET_IMPLIB -Wl,--major-image-version,0,--minor-image-version,0 $LINK_PATH $LINK_LIBRARIES && $POST_BUILD"
   description = Linking CXX executable $TARGET_FILE
   restat = $RESTAT
@@ -45,6 +45,14 @@ rule RERUN_CMAKE
   command = "C:\Clion\CLion 2024.3\bin\cmake\win\x64\bin\cmake.exe" --regenerate-during-build -SC:\Users\modys\OneDrive\Desktop\A1-Ramly -BC:\Users\modys\OneDrive\Desktop\A1-Ramly\cmake-build-debug
   description = Re-running CMake...
   generator = 1
+
+
+#############################################
+# Rule for cleaning additional files.
+
+rule CLEAN_ADDITIONAL
+  command = "C:\Clion\CLion 2024.3\bin\cmake\win\x64\bin\cmake.exe" -DCONFIG=$CONFIG -P CMakeFiles\clean_additional.cmake
+  description = Cleaning additional files...
 
 
 #############################################

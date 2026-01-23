@@ -1,18 +1,31 @@
-cmake_minimum_required(VERSION 3.30)
-project(A1_Ramly)
+cmake_minimum_required(VERSION 3.5)
 
-set(CMAKE_CXX_STANDARD 23)
+project(RGB_Gulag_GUI LANGUAGES CXX)
 
-# Specify the directory where the compiler should look for header files.
-# The `.` means the current directory, which is where your header files are.
-include_directories(.)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+set(CMAKE_AUTOUIC ON)
 
-# Link the executable with the source file.
-# Since the image library is header-only, you don't need to link it as a separate library.
-add_executable(A1_Ramly
+# Update this path if your Qt location is different
+set(CMAKE_PREFIX_PATH "C:/Qt/6.10.1/mingw_64")
+
+find_package(Qt6 REQUIRED COMPONENTS Widgets)
+
+set(PROJECT_SOURCES
         main.cpp
-        samurai.jpg
-        #[[ImageProcessingDemo.cpp]]
-        Sample-imgs
-
+        mainwindow.cpp
+        mainwindow.h
+        filters.cpp
+        filters.h
+        stb_impl.cpp         # This compiles the image library
+        Image_Class.h
+        stb_image.h
+        stb_image_write.h
 )
+
+add_executable(RGB_Gulag_GUI ${PROJECT_SOURCES})
+
+target_link_libraries(RGB_Gulag_GUI PRIVATE Qt6::Widgets)
+target_include_directories(RGB_Gulag_GUI PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})

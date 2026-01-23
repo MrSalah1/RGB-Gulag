@@ -1,4 +1,22 @@
 # ninja log v6
-8	1248	7808530234606366	CMakeFiles/A1_Ramly.dir/main.cpp.obj	f38d61d1b614e28e
-1248	1413	7808530247014117	A1_Ramly.exe	b3718690cbcd8226
-3	317	7810269401545060	build.ninja	b2e4d5f3746f4d34
+6	1415	7815646201668483	CMakeFiles/A1_Ramly.dir/main.cpp.obj	f38d61d1b614e28e
+1415	1573	7815646215770720	A1_Ramly.exe	b3718690cbcd8226
+911	1676	7908727351182290	CMakeFiles/RGB_Gulag_GUI.dir/filters.cpp.obj	a1aa7e48989ae470
+3	317	7908737257588276	build.ninja	b2e4d5f3746f4d34
+220	3461	7908731753191532	CMakeFiles/RGB_Gulag_GUI.dir/main.cpp.obj	78a8f48517a003ef
+905	3979	7908727351127684	CMakeFiles/RGB_Gulag_GUI.dir/mainwindow.cpp.obj	da8375bdb08d2c8e
+14	219	7908731751124959	RGB_Gulag_GUI_autogen/mocs_compilation.cpp	c548177e15e41e4d
+14	219	7908731751124959	RGB_Gulag_GUI_autogen/timestamp	c548177e15e41e4d
+14	219	7908731751124959	C:/Users/modys/OneDrive/Desktop/A1-Ramly/cmake-build-debug/RGB_Gulag_GUI_autogen/timestamp	c548177e15e41e4d
+14	219	7908731751124959	C:/Users/modys/OneDrive/Desktop/A1-Ramly/cmake-build-debug/RGB_Gulag_GUI_autogen/mocs_compilation.cpp	c548177e15e41e4d
+895	3772	7908727351026075	CMakeFiles/RGB_Gulag_GUI.dir/RGB_Gulag_GUI_autogen/mocs_compilation.cpp.obj	21ced0161c2c19e6
+14	796	7908737296606679	RGB_Gulag_GUI_autogen/timestamp	c548177e15e41e4d
+14	796	7908737296606679	RGB_Gulag_GUI_autogen/mocs_compilation.cpp	c548177e15e41e4d
+14	796	7908737296606679	C:/Users/modys/OneDrive/Desktop/A1-Ramly/cmake-build-debug/RGB_Gulag_GUI_autogen/timestamp	c548177e15e41e4d
+14	796	7908737296606679	C:/Users/modys/OneDrive/Desktop/A1-Ramly/cmake-build-debug/RGB_Gulag_GUI_autogen/mocs_compilation.cpp	c548177e15e41e4d
+813	1612	7908737297589263	CMakeFiles/RGB_Gulag_GUI.dir/filters.cpp.obj	a1aa7e48989ae470
+819	1841	7908737297642994	CMakeFiles/RGB_Gulag_GUI.dir/stb_impl.cpp.obj	7d6f040c7531cce0
+802	3633	7908737297481326	CMakeFiles/RGB_Gulag_GUI.dir/main.cpp.obj	78a8f48517a003ef
+797	3767	7908737297436229	CMakeFiles/RGB_Gulag_GUI.dir/RGB_Gulag_GUI_autogen/mocs_compilation.cpp.obj	21ced0161c2c19e6
+808	3987	7908737297538836	CMakeFiles/RGB_Gulag_GUI.dir/mainwindow.cpp.obj	da8375bdb08d2c8e
+3988	4293	7908737329333705	RGB_Gulag_GUI.exe	323f706b1493deca
